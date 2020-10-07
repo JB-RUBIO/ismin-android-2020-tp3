@@ -11,8 +11,8 @@ class Bookshelf {
         return this.storage[title]
     }
 
-    fun getAllBooks(): List<Book> {
-        return ArrayList(this.storage.values).sortedBy { book -> book.title }
+    fun getAllBooks(): ArrayList<Book> {
+        return ArrayList(this.storage.values.sortedBy { book -> book.title })
     }
 
     fun getBooksOf(author: String): List<Book> {

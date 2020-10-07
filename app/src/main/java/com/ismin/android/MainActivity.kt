@@ -31,8 +31,8 @@ class MainActivity : AppCompatActivity() {
         date = "1927"
     );
 
-
     private lateinit var rcvBooks: RecyclerView
+    private lateinit var bookAdapter: BookAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -43,7 +43,8 @@ class MainActivity : AppCompatActivity() {
         this.bookshelf.addBook(aLaRechercheDuTempsPerdu)
 
         this.rcvBooks = findViewById(R.id.a_main_rcv_books)
-        this.rcvBooks.adapter = BookAdapter(bookshelf)
+        bookAdapter = BookAdapter(bookshelf.getAllBooks())
+        this.rcvBooks.adapter = bookAdapter
         val linearLayoutManager = LinearLayoutManager(this)
         this.rcvBooks.layoutManager = linearLayoutManager
 
@@ -61,7 +62,8 @@ class MainActivity : AppCompatActivity() {
         if (requestCode == this.createBookActivityRequestCode) {
             val book = data?.extras?.get(CREATED_BOOK_EXTRA_KEY) as Book
             bookshelf.addBook(book)
-            this.rcvBooks.adapter?.notifyDataSetChanged()
+            bookAdapter.refreshData(bookshelf.getAllBooks())
+            bookAdapter.notifyDataSetChanged()
         }
     }
 }

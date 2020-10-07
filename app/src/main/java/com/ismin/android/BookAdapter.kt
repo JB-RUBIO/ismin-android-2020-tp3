@@ -4,14 +4,14 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 
-class BookAdapter(private val bookshelf: Bookshelf) : RecyclerView.Adapter<BookViewHolder>() {
+class BookAdapter(private val books: ArrayList<Book>) : RecyclerView.Adapter<BookViewHolder>() {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BookViewHolder {
         val row = LayoutInflater.from(parent.context).inflate(R.layout.row_book, parent, false)
         return BookViewHolder(row)
     }
 
     override fun onBindViewHolder(holder: BookViewHolder, position: Int) {
-        val (title, author, date) = this.bookshelf.getAllBooks()[position]
+        val (title, author, date) = books[position]
 
         holder.txvTitle.text = title
         holder.txvAuthor.text = author
@@ -19,6 +19,11 @@ class BookAdapter(private val bookshelf: Bookshelf) : RecyclerView.Adapter<BookV
     }
 
     override fun getItemCount(): Int {
-        return this.bookshelf.getTotalNumberOfBooks()
+        return books.size
+    }
+
+    fun refreshData(updatedBooks: java.util.ArrayList<Book>) {
+        books.clear()
+        books.addAll(updatedBooks)
     }
 }
