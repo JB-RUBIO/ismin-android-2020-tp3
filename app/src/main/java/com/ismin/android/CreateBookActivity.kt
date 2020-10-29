@@ -5,19 +5,23 @@ import android.os.Bundle
 import android.view.View
 import android.widget.EditText
 import androidx.appcompat.app.AppCompatActivity
+import com.ismin.android.databinding.ActivityCreateBookBinding
 
 const val CREATED_BOOK_EXTRA_KEY = "CREATED_BOOK_EXTRA_KEY"
 
+
 class CreateBookActivity : AppCompatActivity() {
+    private lateinit var binding : ActivityCreateBookBinding
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_create_book)
+        binding = ActivityCreateBookBinding.inflate(layoutInflater)
+        setContentView(binding.root)
     }
 
     fun saveBook(view: View) {
-        val title = findViewById<EditText>(R.id.a_create_book_edt_title).text.toString();
-        val author = findViewById<EditText>(R.id.a_create_book_edt_author).text.toString();
-        val date = findViewById<EditText>(R.id.a_create_book_edt_date).text.toString();
+        val title = binding.aCreateBookEdtTitle.text.toString()
+        val author = binding.aCreateBookEdtAuthor.text.toString()
+        val date = binding.aCreateBookEdtDate.text.toString()
 
         val book = Book(title, author, date)
         val intent = Intent()

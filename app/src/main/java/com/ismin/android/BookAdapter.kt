@@ -3,26 +3,26 @@ package com.ismin.android
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import com.ismin.android.databinding.RowBookBinding
 
-class BookAdapter(private val books: ArrayList<Book>) : RecyclerView.Adapter<BookViewHolder>() {
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BookViewHolder {
-        val row = LayoutInflater.from(parent.context).inflate(R.layout.row_book, parent, false)
-        return BookViewHolder(row)
+class BookAdapter(private val books: MutableList<Book>) : RecyclerView.Adapter<BookAdapter.ViewHolder>() {
+    class ViewHolder(val binding: RowBookBinding) : RecyclerView.ViewHolder(binding.root) {
+        fun bind(book: Book) {
+            binding.book = book
+            binding.executePendingBindings()
+        }
     }
 
-    override fun onBindViewHolder(holder: BookViewHolder, position: Int) {
-        val (title, author, date) = books[position]
-
-        holder.txvTitle.text = title
-        holder.txvAuthor.text = author
-        holder.txvDate.text = date
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
+        val binding = RowBookBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+        return ViewHolder(binding)
     }
 
-    override fun getItemCount(): Int {
-        return books.size
-    }
+    override fun onBindViewHolder(holder: ViewHolder, position: Int) = holder.bind(books[position])
 
-    fun refreshData(updatedBooks: java.util.ArrayList<Book>) {
+    override fun getItemCount() = books.size
+
+    fun refreshData(updatedBooks: MutableList<Book>) {
         books.clear()
         books.addAll(updatedBooks)
     }

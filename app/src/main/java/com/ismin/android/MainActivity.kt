@@ -7,6 +7,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.ismin.android.databinding.ActivityMainBinding
 
 
 class MainActivity : AppCompatActivity() {
@@ -31,25 +32,25 @@ class MainActivity : AppCompatActivity() {
         date = "1927"
     );
 
-    private lateinit var rcvBooks: RecyclerView
     private lateinit var bookAdapter: BookAdapter
+    private lateinit var binding: ActivityMainBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
+        binding = ActivityMainBinding.inflate(layoutInflater)
+        setContentView(binding.root)
 
         this.bookshelf.addBook(theLordOfTheRings)
         this.bookshelf.addBook(theHobbit)
         this.bookshelf.addBook(aLaRechercheDuTempsPerdu)
 
-        this.rcvBooks = findViewById(R.id.a_main_rcv_books)
         bookAdapter = BookAdapter(bookshelf.getAllBooks())
-        this.rcvBooks.adapter = bookAdapter
+        binding.aMainRcvBooks.adapter = bookAdapter
         val linearLayoutManager = LinearLayoutManager(this)
-        this.rcvBooks.layoutManager = linearLayoutManager
+        binding.aMainRcvBooks.layoutManager = linearLayoutManager
 
         val dividerItemDecoration = DividerItemDecoration(this, linearLayoutManager.orientation)
-        this.rcvBooks.addItemDecoration(dividerItemDecoration)
+        binding.aMainRcvBooks.addItemDecoration(dividerItemDecoration)
     }
 
     fun goToCreation(view: View) {
